@@ -1,0 +1,24 @@
+# Plasma-Donation
+tech stack - html, css, bootstrap, js, node.js, express.js, MongoDB (mongoose) 
+
+Project Description:
+
+Everyday, family members and friends of COVID patients are tapping into all their contacts earnestly hoping to find a recovered person who is willing to donate plasma. Convalescent plasma therapy is one of the options explored to save some patients.
+
+Plasma from those who recovered from COVID-19 contains antibodies that neutralise coronavirus. It is expected that the mortality rate might come down and patients will recover when plasma filled with the neutralising antibodies are infused into them. 
+
+Plasma Donation has decreased the mortality by a significant value  and this website serves as platform through which people who have previously tested positive for covid-19 and recovered can apply to be donors if the eligibility criteria is satisfied. Hospitals, clinics and other practitioners can use this website to access the database of donors whenever needed.
+
+
+
+
+Software Design Description (SDD):
+
+We use Html forms to take input from the user which is parsed to Node.js (Express.js) where we can access the data that has been passed as the input. This data is then sent to MongoDB database with the help of Mongoose which is Object Data Modeling (ODM) library for MongoDB. Along with this we use CSS, Bootstrap, JavaScript and ejs.
+
+
+Features:
+
+Any user that passes the eligibility criteria can be a donor. Hospitals, clinics etc can create an account that lets them access this database of donors and contact them whenever required.
+A donor authentication process is carried out to verify the donor details.
+The hospitals are also verified by their unique IRDIA number.
