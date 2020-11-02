@@ -4,10 +4,16 @@ const mongoose = require("mongoose");
 
 const app = express();
 
+app.set("view engine", "ejs");
+
+
+
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(express.static("public"));
 
 mongoose.connect("mongodb://localhost:27017/patientDB", {useNewUrlParser : true});
+
+var elementsdata = [] ;
 
 const hospitalSchema = new mongoose.Schema ({
     hospitalName : String,
@@ -42,8 +48,8 @@ app.get("/", function(req , res){
     res.sendFile(__dirname + "/public/homepage.html");
 });
 
-app.get("/login", function(r1, r2){
-    r2.sendFile(__dirname + "/public/login.html");
+app.get("/login", function(request, respons){
+    respons.sendFile(__dirname + "/public/login.html");
 });
 
 app.get("/signup", function(requ, respo){
@@ -55,28 +61,16 @@ app.get("/register", function(re, resp){
 });
 
 app.get("/accounts/hospital", function(r, response){
-    response.sendFile(__dirname + "/public/datadisp.html");
-});
-
-
-app.post("/login", function(r1, r2){
-    HospitalData.find(function(err, data1){
-        if (err) {
-            console.log(err);
-        } else {
-            data1.forEach(function(data){
-                if(((parseInt(r1.body.irdi)) === data.IRDIANumber) && (r1.body.password === data.password)){
-                    r2.send("hieeeeee");
-                }
-            });
-        }
-
+    donor.find({}, function(err, elements){
+        console.log(elements);
+        //response.send(elements);
+        response.render("abcd", {elementsdata : elements});
     });
-
 });
+
 
 app.post("/signup", function(requ, respo){
-    res.redirect("/login");
+    respo.redirect("/login");
     console.log(requ.body);
     const hospitalData = new HospitalData ({
         hospitalName : requ.body.hospital_name,
@@ -106,8 +100,29 @@ app.post("/register", function(re, resp){
 });
     donordetails.save();
 
-    resp.send("successful Registration");
+    resp.redirect("/")
 });
+
+
+app.post("/login", function(request, respons){
+    HospitalData.find({}, function(err, data){
+        if (err) {
+            console.log(err);
+        } else {
+            data.forEach(function(data1){
+                if (data1.IRDIANumber == request.body.irdi) {
+                    if (data1.password == request.body.password){
+                        
+                    }
+                   
+                }
+            });
+        }
+
+    });
+    respons.redirect("/accounts/hospital");
+});
+
 
 app.listen(3000, function(){
     console.log("hello");
